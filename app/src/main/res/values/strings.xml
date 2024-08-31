@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CustomListView</string>
+    <string name="exit">выход</string>
+    <string name="string_hello">Добро пожаловать в магазин продуктов!</string>
+    <string name="string_create_shop_BTN">Создать магазин</string>
+    <string name="text_price_TV">Цена продукта</string>
+    <string name="text_product_name_TV">Название продукта</string>
+    <string name="text_input_name_ET">Введите название продукта</string>
+    <string name="text_input_price_ET">Введите цену продукта</string>
+    <string name="text_save_BTN">Добавить</string>
+</resources>
