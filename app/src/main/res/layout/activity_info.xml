@@ -15,7 +15,8 @@
         android:background="@color/toolbarColor"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+
         android:id="@+id/infoImageIV"
         android:layout_width="@dimen/_300dp"
         android:layout_height="@dimen/_300dp"
@@ -41,15 +42,15 @@
 
         <TextView
             android:id="@+id/infoNameTV"
-            android:gravity="center"
             android:layout_width="match_parent"
+            android:gravity="center"
             android:hint="@string/hint_name_TV"
             android:textSize="@dimen/_24sp" />
 
         <TextView
             android:id="@+id/infoPriceTV"
-            android:gravity="end"
             android:layout_width="match_parent"
+            android:gravity="end"
             android:hint="@string/hint_price_TV"
             android:textSize="@dimen/_30sp" />
 
@@ -59,5 +60,17 @@
             android:hint="@string/hint_info_TV" />
 
     </GridLayout>
+
+    <Button
+        android:id="@+id/updateBTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:text="@string/text_remove_BTN"
+        android:textSize="@dimen/_24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

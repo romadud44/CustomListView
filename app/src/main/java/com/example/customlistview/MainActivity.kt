@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 finishAndRemoveTask()
                 finishAffinity()
                 finish()
-
+                Toast.makeText(this, "Программа завершена", Toast.LENGTH_LONG).show()
             }
         }
         return super.onOptionsItemSelected(item)

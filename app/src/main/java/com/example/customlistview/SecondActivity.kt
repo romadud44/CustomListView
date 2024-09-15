@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,11 +15,14 @@ import com.example.customlistview.databinding.ActivitySecondBinding
 
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS", "DEPRECATION")
-class SecondActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity(), Updatable {
+    private var check = true
+    private var product: Product? = null
     private val GALLERY_REQUEST = 777
     private var photoUri: Uri? = null
     private var products: MutableList<Product> = mutableListOf()
     private var listAdapter : ListAdapter? = null
+    private var item: Int? = null
     private lateinit var binding: ActivitySecondBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,15 +56,23 @@ class SecondActivity : AppCompatActivity() {
         }
         binding.listViewLV.onItemClickListener =
             AdapterView.OnItemClickListener{ _, _, position, _ ->
-                val product = listAdapter?.getItem(position)
-                val intent = Intent(this, InfoActivity::class.java)
-                intent.putExtra("name", product?.name)
-                intent.putExtra("price", product?.price)
-                intent.putExtra("info", product?.info)
-                intent.putExtra("image", product?.image)
-                startActivity(intent)
+                product = listAdapter?.getItem(position)
+                item = position
+                update(product as Product)
+
             }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        check = intent.extras?.getBoolean("newCheck") ?: true
+        if (!check) {
+            products = intent.getSerializableExtra("list") as MutableList<Product>
+            listAdapter = ListAdapter(this, products)
+            check = true
+        }
+        binding.listViewLV.adapter = listAdapter
     }
 
     private fun createProduct() {
@@ -68,7 +80,7 @@ class SecondActivity : AppCompatActivity() {
         val productPrice = binding.priceET.text.toString()
         val productInfo = binding.infoET.text.toString()
         val productImage = photoUri.toString()
-        val product = Product(productName, productPrice.toInt(), productInfo, productImage)
+        val product = Product(productName, productPrice, productInfo, productImage)
         products.add(product)
         clearEditFields()
         photoUri = null
@@ -93,7 +105,7 @@ class SecondActivity : AppCompatActivity() {
                 finishAndRemoveTask()
                 finishAffinity()
                 finish()
-
+                Toast.makeText(this, "Программа завершена", Toast.LENGTH_LONG).show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -109,5 +121,14 @@ class SecondActivity : AppCompatActivity() {
                 binding.imageViewIV.setImageURI(photoUri)
             }
         }
+    }
+
+    override fun update(product: Product) {
+        val intent = Intent(this, InfoActivity::class.java)
+        intent.putExtra("product", product)
+        intent.putExtra("products", this.products as ArrayList<Product>)
+        intent.putExtra("position", item)
+        intent.putExtra("check", check)
+        startActivity(intent)
     }
 }

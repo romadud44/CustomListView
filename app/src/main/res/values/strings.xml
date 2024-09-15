@@ -11,4 +11,5 @@
     <string name="hint_name_TV">name</string>
     <string name="hint_price_TV">price</string>
     <string name="hint_info_TV">info</string>
+    <string name="text_remove_BTN">Изменить и вернуться</string>
 </resources>
