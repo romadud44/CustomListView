@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.customlistview.databinding.ActivityInfoBinding
-import com.example.customlistview.databinding.ActivityMainBinding
+
 
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding

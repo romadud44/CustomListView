@@ -1,10 +1,8 @@
 package com.example.customlistview
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
@@ -12,15 +10,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.customlistview.databinding.ActivityMainBinding
 import com.example.customlistview.databinding.ActivitySecondBinding
-import java.io.IOException
 
+
+@Suppress("DEPRECATED_IDENTITY_EQUALS", "DEPRECATION")
 class SecondActivity : AppCompatActivity() {
     private val GALLERY_REQUEST = 777
-    var photoUri: Uri? = null
-    var products: MutableList<Product> = mutableListOf()
-    var listAdapter : ListAdapter? = null
+    private var photoUri: Uri? = null
+    private var products: MutableList<Product> = mutableListOf()
+    private var listAdapter : ListAdapter? = null
     private lateinit var binding: ActivitySecondBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +99,7 @@ class SecondActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
