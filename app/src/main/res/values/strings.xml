@@ -8,4 +8,7 @@
     <string name="text_input_name_ET">Введите название продукта</string>
     <string name="text_input_price_ET">Введите цену продукта</string>
     <string name="text_save_BTN">Добавить</string>
+    <string name="hint_name_TV">name</string>
+    <string name="hint_price_TV">price</string>
+    <string name="hint_info_TV">info</string>
 </resources>

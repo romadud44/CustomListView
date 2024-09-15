@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AdapterView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,8 +18,9 @@ import java.io.IOException
 
 class SecondActivity : AppCompatActivity() {
     private val GALLERY_REQUEST = 777
-    var bitmap: Bitmap? = null
+    var photoUri: Uri? = null
     var products: MutableList<Product> = mutableListOf()
+    var listAdapter : ListAdapter? = null
     private lateinit var binding: ActivitySecondBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,26 +47,41 @@ class SecondActivity : AppCompatActivity() {
         binding.saveBTN.setOnClickListener {
             createProduct()
 
-            val listAdapter = ListAdapter(this, products)
+            listAdapter = ListAdapter(this, products)
             binding.listViewLV.adapter = listAdapter
-            listAdapter.notifyDataSetChanged()
+            listAdapter?.notifyDataSetChanged()
             clearEditFields()
         }
+        binding.listViewLV.onItemClickListener =
+            AdapterView.OnItemClickListener{ _, _, position, _ ->
+                val product = listAdapter?.getItem(position)
+                val intent = Intent(this, InfoActivity::class.java)
+                intent.putExtra("name", product?.name)
+                intent.putExtra("price", product?.price)
+                intent.putExtra("info", product?.info)
+                intent.putExtra("image", product?.image)
+                startActivity(intent)
+            }
 
     }
 
     private fun createProduct() {
         val productName = binding.nameET.text.toString()
         val productPrice = binding.priceET.text.toString()
-        val productImage = bitmap
-        val product = Product(productName, productPrice.toString().toInt(), productImage)
+        val productInfo = binding.infoET.text.toString()
+        val productImage = photoUri.toString()
+        val product = Product(productName, productPrice.toInt(), productInfo, productImage)
         products.add(product)
+        clearEditFields()
+        photoUri = null
     }
 
     private fun clearEditFields() {
         binding.nameET.text.clear()
         binding.priceET.text.clear()
+        binding.infoET.text.clear()
         binding.imageViewIV.setImageResource(R.drawable.ic_product)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,13 +105,9 @@ class SecondActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             GALLERY_REQUEST -> if (resultCode === RESULT_OK) {
-                val selectedImage: Uri? = data?.data
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                binding.imageViewIV.setImageBitmap(bitmap)
+                photoUri = data?.data
+
+                binding.imageViewIV.setImageURI(photoUri)
             }
         }
     }
